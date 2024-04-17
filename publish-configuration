@@ -1,0 +1,46 @@
+#!/usr/bin/env php
+<?php
+
+ini_set("display_errors", "1");
+error_reporting(E_ALL);
+
+$options = getopt(
+    'r::',
+    [
+        'recipient::',
+    ],
+);
+
+$recipient ??= $options['r'] ?? $options['recipient'] ?? readline('Input recipient config folder: ');
+
+if (! $recipient) {
+    echo "ERROR: Pleas input recipient config folder\n";
+    exit;
+}
+
+if (! is_dir($recipient)) {
+    echo "ERROR: Recipient folder not found\n";
+    exit;
+}
+
+$to = $recipient . '/omnipay_yookassa1.php';
+
+if (is_file($to)) {
+    echo 'Warning: The file already exists! When replacing, the contents of the file will be DELETED! Type \'yes\' to replace file: ';
+    $handle = fopen ("php://stdin","r");
+    $line = fgets($handle);
+    fclose($handle);
+    if (trim($line) != 'yes') {
+        echo "ABORTING!\n";
+        exit;
+    }
+}
+
+if (! copy(__DIR__ . '/config/omnipay_yookassa.php', $to)) {
+    echo "\n\nERROR: Copy fail!\n\n";
+    exit;
+}
+
+echo "\n" .
+     "Publish configuration : {$to} \n" .
+     "Completed!\n";

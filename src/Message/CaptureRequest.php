@@ -2,10 +2,11 @@
 /**
  * YooKassa driver for Omnipay payment processing library
  *
- * @link      https://github.com/igor-tv/omnipay-yookassa
+ * @link      https://github.com/arhitov/omnipay-yookassa
  * @package   omnipay-yookassa
  * @license   MIT
  * @copyright Copyright (c) 2021, Igor Tverdokhleb, igor-tv@mail.ru
+ * @copyright Copyright (c) 2024, Alexander Arhitov, clgsru@gmail.com
  */
 
 namespace Omnipay\YooKassa\Message;
@@ -14,9 +15,8 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use Throwable;
 
 /**
- * Class CompletePurchaseRequest.
- *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ * Payment confirmation.
+ * Confirms your willingness to accept payment. At this stage, the money is reserved in the payer's account and awaits confirmation from the seller.
  */
 class CaptureRequest extends AbstractRequest
 {
@@ -35,12 +35,16 @@ class CaptureRequest extends AbstractRequest
     public function sendData($data)
     {
         try {
-            $result = $this->client->capturePayment([
-                'amount' => [
-                    'value' => $this->getAmount(),
-                    'currency' => $this->getCurrency(),
+            $result = $this->client->capturePayment(
+                [
+                    'amount' => [
+                        'value' => $this->getAmount(),
+                        'currency' => $this->getCurrency(),
+                    ],
                 ],
-            ], $this->getTransactionReference(), 'capture-' . $this->getTransactionId());
+                $this->getTransactionReference(),
+                'capture-' . $this->getTransactionId()
+            );
 
             return $this->response = new CaptureResponse($this, $result);
         } catch (Throwable $e) {

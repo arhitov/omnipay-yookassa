@@ -2,16 +2,18 @@
 /**
  * YooKassa driver for Omnipay payment processing library
  *
- * @link      https://github.com/igor-tv/omnipay-yookassa
+ * @link      https://github.com/arhitov/omnipay-yookassa
  * @package   omnipay-yookassa
  * @license   MIT
  * @copyright Copyright (c) 2021, Igor Tverdokhleb, igor-tv@mail.ru
+ * @copyright Copyright (c) 2024, Alexander Arhitov, clgsru@gmail.com
  */
 
 namespace Omnipay\YooKassa;
 
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Http\ClientInterface;
+use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\YooKassa\Message\CaptureRequest;
 use Omnipay\YooKassa\Message\CaptureResponse;
 use Omnipay\YooKassa\Message\DetailsRequest;
@@ -23,13 +25,10 @@ use YooKassa\Client;
 
 /**
  * Class Gateway.
- *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
  */
 class Gateway extends AbstractGateway
 {
-    /** @var Client|null */
-    private $yooKassaClient;
+    private Client|null $yooKassaClient = null;
 
     public function __construct(ClientInterface $httpClient = null, HttpRequest $httpRequest = null)
     {
@@ -40,15 +39,22 @@ class Gateway extends AbstractGateway
     {
         if ($this->yooKassaClient === null) {
             $this->yooKassaClient = new Client();
-            $this->yooKassaClient->setAuth($this->getShopId(), $this->getSecret());
+            $this->yooKassaClient->setAuth($this->getParameter('shopId'), $this->getParameter('secret'));
         }
 
         return $this->yooKassaClient;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'YooKassa';
+    }
+
+    public function setAuth(string|int $shopId, string $secret): self
+    {
+        $this->setParameter('shopId', $shopId);
+        $this->setParameter('secret', $secret);
+        return $this;
     }
 
     public function getShopId()
@@ -56,7 +62,7 @@ class Gateway extends AbstractGateway
         return $this->getParameter('shopId');
     }
 
-    public function setShopId($value)
+    public function setShopId($value): self
     {
         return $this->setParameter('shopId', $value);
     }
@@ -66,53 +72,59 @@ class Gateway extends AbstractGateway
         return $this->getParameter('secret');
     }
 
-    public function setSecret($value)
+    public function setSecret($value): self
     {
         return $this->setParameter('secret', $value);
     }
 
     /**
-     * @param array $parameters
+     * Create a payment.
+     *
+     * @param array $options
      * @return PurchaseRequest|\Omnipay\Common\Message\AbstractRequest
      */
-    public function purchase(array $parameters = [])
+    public function purchase(array $options = []): AbstractRequest|PurchaseRequest
     {
-        return $this->createRequest(PurchaseRequest::class, $this->injectYooKassaClient($parameters));
+        return $this->createRequest(PurchaseRequest::class, $this->getParametersClient($options));
     }
 
     /**
-     * @param array $parameters
+     * Payment confirmation.
+     *
+     * @param array $options
      * @return CaptureResponse|\Omnipay\Common\Message\AbstractRequest
      */
-    public function capture(array $parameters = [])
+    public function capture(array $options = []): AbstractRequest|CaptureResponse
     {
-        return $this->createRequest(CaptureRequest::class, $this->injectYooKassaClient($parameters));
+        return $this->createRequest(CaptureRequest::class, $this->getParametersClient($options));
     }
 
     /**
-     * @param array $parameters
+     * Get payment information.
+     *
+     * @param array $options
      * @return \Omnipay\Common\Message\AbstractRequest|DetailsRequest
      */
-    public function details(array $parameters = [])
+    public function details(array $options = []): DetailsRequest|AbstractRequest
     {
-        return $this->createRequest(DetailsRequest::class, $this->injectYooKassaClient($parameters));
+        return $this->createRequest(DetailsRequest::class, $this->getParametersClient($options));
     }
 
     /**
-     * @param array $parameters
+     * @param array $options
      * @return \Omnipay\Common\Message\AbstractRequest|DetailsResponse
      */
-    public function notification(array $parameters = [])
+    public function notification(array $options = []): DetailsResponse|AbstractRequest
     {
-        return $this->createRequest(IncomingNotificationRequest::class, $this->injectYooKassaClient($parameters));
+        return $this->createRequest(IncomingNotificationRequest::class, $this->getParametersClient($options));
     }
 
-    private function injectYooKassaClient(array $parameters): array
+    private function getParametersClient(array $options): array
     {
-        $this->setShopId($this->parameters->get('shopId'));
-        $this->setSecret($this->parameters->get('secret'));
-        $parameters['yooKassaClient'] = $this->getYooKassaClient();
+//        $this->setShopId($this->parameters->get('shopId'));
+//        $this->setSecret($this->parameters->get('secret'));
+        $options['yooKassaClient'] = $this->getYooKassaClient();
 
-        return $parameters;
+        return $options;
     }
 }

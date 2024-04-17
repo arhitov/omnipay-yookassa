@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  php-cli:
+    build:
+      context: './../'
+      dockerfile: ./docker/Dockerfile
+      args:
+        - INSTALL_GIT=true
+        - INSTALL_ZIP=true
+        - INSTALL_GD=false
+        - INSTALL_BCMATH=false
+        - INSTALL_PHPREDIS=false
+        - INSTALL_OPCACHE=false
+        - INSTALL_IMAGEMAGICK=false
+        - INSTALL_EXIF=false
+        - INSTALL_PCNTL=false
+        - INSTALL_INTL=false
+        - INSTALL_SOAP=false
+        - INSTALL_PGSQL=false
+        - INSTALL_MYSQL=false
+        - INSTALL_GETTEXT=false
+        - INSTALL_SOCKETS=false
+        - INSTALL_MEMCACHED=false
+        - INSTALL_PECL_SYNC=false
+    restart: 'no'
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - ./../:/var/www/html:cached

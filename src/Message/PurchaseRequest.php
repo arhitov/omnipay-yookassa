@@ -2,67 +2,23 @@
 /**
  * YooKassa driver for Omnipay payment processing library
  *
- * @link      https://github.com/igor-tv/omnipay-yookassa
+ * @link      https://github.com/arhitov/omnipay-yookassa
  * @package   omnipay-yookassa
  * @license   MIT
  * @copyright Copyright (c) 2021, Igor Tverdokhleb, igor-tv@mail.ru
+ * @copyright Copyright (c) 2024, Alexander Arhitov, clgsru@gmail.com
  */
 
 namespace Omnipay\YooKassa\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
+use Throwable;
+
 /**
- * Class PurchaseRequest.
- *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
+ * Create a payment.
  */
 class PurchaseRequest extends AbstractRequest
 {
-    public function sendData($data)
-    {
-        try {
-            $options = [
-                'amount' => [
-                    'value' => $data['amount'],
-                    'currency' => $data['currency'],
-                ],
-                'receipt' => $data['receipt'],
-                'description' => $data['description'],
-                'confirmation' => [
-                    'type' => 'redirect',
-                    'return_url' => $data['return_url'],
-                ],
-                'capture' => $data['capture'],
-                'metadata' => [
-                    'transactionId' => $data['transactionId'],
-                ],
-            ];
-
-            if(!empty($data['receipt'])) {
-                $options['receipt'] = $data['receipt'];
-            }
-
-            if(!empty($data['payment_method_data'])) {
-                $options['payment_method_data'] = $data['payment_method_data'];
-            }
-
-
-            $paymentResponse = $this->client->createPayment($options, $this->makeIdempotencyKey());
-
-            return $this->response = new PurchaseResponse($this, $paymentResponse);
-        } catch (Throwable $e) {
-            throw new InvalidRequestException('Failed to request purchase: ' . $e->getMessage(), 0, $e);
-        }
-    }
-
-    private function makeIdempotencyKey(): string
-    {
-        return md5(
-            implode(',',
-                ['create', json_encode($this->getData())],
-            )
-        );
-    }
-
     public function getData()
     {
         $this->validate('amount', 'currency', 'returnUrl', 'transactionId', 'description', 'capture');
@@ -78,5 +34,52 @@ class PurchaseRequest extends AbstractRequest
             'payment_method_data' => $this->getPaymentMethodData(),
             'refundable' => true,
         ];
+    }
+
+    public function sendData($data)
+    {
+        try {
+            $options = [
+                'amount' => [
+                    'value' => $data['amount'],
+                    'currency' => $data['currency'],
+                ],
+                'description' => $data['description'],
+                'confirmation' => [
+                    'type' => 'redirect',
+                    'return_url' => $data['return_url'],
+                ],
+                'capture' => $data['capture'],
+                'metadata' => [
+                    'transactionId' => $data['transactionId'],
+                ],
+            ];
+
+            if (! empty($data['receipt'])) {
+                $options['receipt'] = $data['receipt'];
+            }
+
+            if (! empty($data['payment_method_data'])) {
+                $options['payment_method_data'] = $data['payment_method_data'];
+            }
+
+            $paymentResponse = $this->client->createPayment(
+                $options,
+                $this->makeIdempotencyKey()
+            );
+
+            return $this->response = new PurchaseResponse($this, $paymentResponse);
+        } catch (Throwable $e) {
+            throw new InvalidRequestException('Failed to request purchase: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
+    private function makeIdempotencyKey(): string
+    {
+        return md5(
+            implode(',',
+                ['create', json_encode($this->getData())],
+            )
+        );
     }
 }

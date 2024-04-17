@@ -2,10 +2,11 @@
 /**
  * YooKassa driver for Omnipay payment processing library
  *
- * @link      https://github.com/igor-tv/omnipay-yookassa
+ * @link      https://github.com/arhitov/omnipay-yookassa
  * @package   omnipay-yookassa
  * @license   MIT
  * @copyright Copyright (c) 2021, Igor Tverdokhleb, igor-tv@mail.ru
+ * @copyright Copyright (c) 2024, Alexander Arhitov, clgsru@gmail.com
  */
 
 namespace Omnipay\YooKassa\Message;
@@ -18,9 +19,6 @@ use YooKassa\Request\Payments\CreatePaymentResponse;
 
 /**
  * Class PurchaseResponse.
- *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
- *
  *
  * @property CreatePaymentResponse $data
  */
@@ -51,6 +49,16 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
         return false;
     }
 
+    public function getAmount(): string
+    {
+        return $this->data->getAmount()->getValue();
+    }
+
+    public function getCurrency(): string
+    {
+        return $this->data->getAmount()->getCurrency();
+    }
+
     public function isRedirect()
     {
         return true;
@@ -64,5 +72,10 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
     public function getRedirectData()
     {
         return [];
+    }
+
+    public function getState(): string
+    {
+        return $this->data->getStatus();
     }
 }

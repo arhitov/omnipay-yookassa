@@ -1,5 +1,6 @@
 {
-    "name": "igor-tv/omnipay-yookassa",
+    "name": "arhitov/omnipay-yookassa",
+    "version": "5.0.0",
     "type": "library",
     "description": "YooKassa driver for Omnipay payment processing library",
     "keywords": [
@@ -10,67 +11,88 @@
         "merchant",
         "payment"
     ],
-    "homepage": "https://github.com/igor-tv/omnipay-yookassa",
+    "homepage": "https://github.com/arhitov/omnipay-yookassa",
     "license": "MIT",
     "support": {
-        "email": "igor-tv@mail.ru",
-        "source": "https://github.com/igor-tv/omnipay-yookassa",
-        "issues": "https://github.com/igor-tv/omnipay-yookassa/issues",
-        "discussions": "https://github.com/igor-tv/omnipay-yookassa/discussions"
+        "email": "clgsru@gmail.com",
+        "source": "https://github.com/arhitov/omnipay-yookassa",
+        "issues": "https://github.com/arhitov/omnipay-yookassa/issues"
     },
     "authors": [
+        {
+            "name": "Alexander Arhitov",
+            "email": "clgsru@gmail.com"
+        },
+        {
+            "name": "Andrey Sokolov",
+            "email": "walfireru@gmail.com",
+            "homepage": "https://github.com/Quiss/"
+        },
+        {
+            "name": "Igor Tverdokhleb",
+            "email": "igor-tv@mail.ru"
+        },
         {
             "name": "Andrii Vasyliev",
             "role": "Project lead",
             "email": "sol@hiqdev.com",
-            "homepage": "http://hipanel.com/"
+            "homepage": "https://hipanel.com/"
         },
         {
             "name": "Dmitry Naumenko",
             "role": "Lead backend developer",
             "email": "d.naumenko.a@gmail.com",
-            "homepage": "http://silverfire.me/"
+            "homepage": "https://silverfire.me/"
         },
         {
             "name": "Andrey Klochok",
             "role": "Lead frontend developer",
             "email": "andreyklochok@gmail.com",
-            "homepage": "http://hiqdev.com/"
+            "homepage": "https://hiqdev.com/"
         },
         {
             "name": "Yuriy Myronchuk",
             "role": "QA Lead",
             "email": "bladeroot@gmail.com",
-            "homepage": "http://hiqdev.com/"
-        },
-        {
-            "name": "Igor Tverdokhleb",
-            "email": "igor-tv@mail.ru"
+            "homepage": "https://hiqdev.com/"
         }
     ],
     "require": {
-        "php": "^7.1 | ^8.0",
+        "php": "^8.0",
         "ext-json": "*",
-        "omnipay/common": "^3.0",
-        "yoomoney/yookassa-sdk-php": "^3.0"
+        "omnipay/common": "^3",
+        "yoomoney/yookassa-sdk-php": "^3.3",
+        "ext-readline": "*"
     },
     "require-dev": {
-        "omnipay/tests": "^4.0"
+        "omnipay/tests": "^4.0",
+        "phpunit/phpunit": "*",
+        "php-http/guzzle6-adapter": "*",
+        "nesbot/carbon": "*"
     },
     "autoload": {
         "psr-4": {
-            "Omnipay\\YooKassa\\": "src",
-            "Omnipay\\YooKassa\\Tests\\": "tests/unit"
+            "Omnipay\\YooKassa\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnipay\\YooKassa\\Tests\\": "tests/"
         }
     },
     "repositories": [
         {
-            "type": "vcs",
+            "type": "git",
             "url": "https://git.yoomoney.ru/scm/sdk/yookassa-sdk-php.git"
-        },
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
         }
-    ]
+    ],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit -c ./ --color",
+        "publish_configuration": "@php ./publish-configuration"
+    }
 }

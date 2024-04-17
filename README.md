@@ -2,13 +2,13 @@
 
 **YooKassa driver for Omnipay payment processing library**
 
-[![GitHub Actions](https://github.com/igor-tv/omnipay-yookassa/workflows/Tests/badge.svg)](https://github.com/igor-tv/omnipay-yookassa/actions)
-[![Latest Stable Version](https://poser.pugx.org/igor-tv/omnipay-yookassa/v)](//packagist.org/packages/igor-tv/omnipay-yookassa) 
-[![Total Downloads](https://poser.pugx.org/igor-tv/omnipay-yookassa/downloads)](//packagist.org/packages/igor-tv/omnipay-yookassa) 
-[![License](https://poser.pugx.org/igor-tv/omnipay-yookassa/license)](//packagist.org/packages/igor-tv/omnipay-yookassa)
+[![GitHub Actions](https://github.com/arhitov/omnipay-yookassa/workflows/Tests/badge.svg)](https://github.com/arhitov/omnipay-yookassa/actions)
+[![Latest Stable Version](https://poser.pugx.org/arhitov/omnipay-yookassa/v)](//packagist.org/packages/arhitov/omnipay-yookassa) 
+[![Total Downloads](https://poser.pugx.org/arhitov/omnipay-yookassa/downloads)](//packagist.org/packages/arhitov/omnipay-yookassa) 
+[![License](https://poser.pugx.org/arhitov/omnipay-yookassa/license)](//packagist.org/packages/arhitov/omnipay-yookassa)
 
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 7.1+.
+processing library for PHP 8.0+.
 
 This package implements [YooKassa](https://yookassa.ru/) support for Omnipay.
 
@@ -30,5 +30,5 @@ If you want to keep up to date with release anouncements, discuss ideas for the 
 or ask more detailed questions, there is also a [mailing list](https://groups.google.com/forum/#!forum/omnipay) which
 you can subscribe to.
 
-If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/igor-tv/omnipay-yookassa/issues),
+If you believe you have found a bug, please report it using the [GitHub issue tracker](https://github.com/arhitov/omnipay-yookassa/issues),
 or better yet, fork the library and submit a pull request.

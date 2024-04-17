@@ -2,10 +2,11 @@
 /**
  * YooKassa driver for Omnipay payment processing library
  *
- * @link      https://github.com/igor-tv/omnipay-yookassa
+ * @link      https://github.com/arhitov/omnipay-yookassa
  * @package   omnipay-yookassa
  * @license   MIT
  * @copyright Copyright (c) 2021, Igor Tverdokhleb, igor-tv@mail.ru
+ * @copyright Copyright (c) 2024, Alexander Arhitov, clgsru@gmail.com
  */
 
 namespace Omnipay\YooKassa\Message;
@@ -18,7 +19,6 @@ use YooKassa\Model\Payment\PaymentInterface;
 /**
  * Class DetailsResponse.
  *
- * @author Dmytro Naumenko <d.naumenko.a@gmail.com>
  * @property PaymentInterface $data
  */
 class DetailsResponse extends AbstractResponse
