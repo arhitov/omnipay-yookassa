@@ -7,9 +7,11 @@
         "php",
         "omnipay",
         "yookassa",
+        "yoomoney",
         "yandex-kassa",
         "merchant",
-        "payment"
+        "payments",
+        "api"
     ],
     "homepage": "https://github.com/arhitov/omnipay-yookassa",
     "license": "MIT",
@@ -82,7 +84,7 @@
     },
     "repositories": [
         {
-            "type": "git",
+            "type": "vcs",
             "url": "https://git.yoomoney.ru/scm/sdk/yookassa-sdk-php.git"
         }
     ],
