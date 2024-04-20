@@ -49,6 +49,21 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
         return false;
     }
 
+    public function isPending(): bool
+    {
+        return $this->getState() === 'pending';
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->getState() === 'canceled';
+    }
+
+    public function isWaitingForCapture(): bool
+    {
+        return $this->getState() === 'waiting_for_capture';
+    }
+
     public function getAmount(): string
     {
         return $this->data->getAmount()->getValue();

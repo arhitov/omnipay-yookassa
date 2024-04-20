@@ -22,7 +22,7 @@ class CaptureRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('shopId', 'secret', 'transactionId', 'transactionReference', 'amount', 'currency');
+        $this->validate('shopId', 'secret', 'transactionReference', 'amount', 'currency');
 
         return $this->httpRequest->request->all();
     }
@@ -43,12 +43,29 @@ class CaptureRequest extends AbstractRequest
                     ],
                 ],
                 $this->getTransactionReference(),
-                'capture-' . $this->getTransactionId()
+                $this->makeIdempotencyKey(),
             );
 
             return $this->response = new CaptureResponse($this, $result);
         } catch (Throwable $e) {
             throw new InvalidRequestException('Failed to capture payment: ' . $e->getMessage(), 0, $e);
         }
+    }
+
+    private function makeIdempotencyKey(): string
+    {
+        return md5(
+            implode(
+                ',',
+                [
+                    'capture',
+                    json_encode([
+                        'amount'                => $this->getAmount(),
+                        'currency'              => $this->getCurrency(),
+                        'transaction_reference' => $this->getTransactionReference(),
+                    ]),
+                ],
+            )
+        );
     }
 }

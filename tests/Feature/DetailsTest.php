@@ -48,6 +48,6 @@ class DetailsTest extends FeatureTestCase
      */
     public function testPaymentInfoByGateway()
     {
-        $this->markTestSkipped('The payment info test has no implementation!');
+        $this->markTestSkipped('This test can only be performed in manual mode. The test is here: tests/Manual/GetPaymentInformationTest');
     }
 }

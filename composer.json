@@ -1,6 +1,6 @@
 {
     "name": "arhitov/omnipay-yookassa",
-    "version": "5.0.1",
+    "version": "5.1.0",
     "type": "library",
     "description": "YooKassa driver for Omnipay payment processing library",
     "keywords": [
@@ -23,7 +23,8 @@
     "authors": [
         {
             "name": "Alexander Arhitov",
-            "email": "clgsru@gmail.com"
+            "email": "clgsru@gmail.com",
+            "homepage": "https://github.com/arhitov/"
         },
         {
             "name": "Andrey Sokolov",

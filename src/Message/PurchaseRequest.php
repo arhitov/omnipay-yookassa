@@ -24,15 +24,15 @@ class PurchaseRequest extends AbstractRequest
         $this->validate('amount', 'currency', 'returnUrl', 'transactionId', 'description', 'capture');
 
         return [
-            'amount' => $this->getAmount(),
-            'currency' => $this->getCurrency(),
-            'description' => $this->getDescription(),
-            'return_url' => $this->getReturnUrl(),
-            'transactionId' => $this->getTransactionId(),
-            'capture' => $this->getCapture(),
-            'receipt' => $this->getReceipt(),
+            'amount'              => $this->getAmount(),
+            'currency'            => $this->getCurrency(),
+            'description'         => $this->getDescription(),
+            'return_url'          => $this->getReturnUrl(),
+            'transactionId'       => $this->getTransactionId(),
+            'capture'             => $this->getCapture(),
+            'receipt'             => $this->getReceipt(),
             'payment_method_data' => $this->getPaymentMethodData(),
-            'refundable' => true,
+            'refundable'          => true,
         ];
     }
 
@@ -40,17 +40,17 @@ class PurchaseRequest extends AbstractRequest
     {
         try {
             $options = [
-                'amount' => [
-                    'value' => $data['amount'],
+                'amount'       => [
+                    'value'    => $data['amount'],
                     'currency' => $data['currency'],
                 ],
-                'description' => $data['description'],
+                'description'  => $data['description'],
                 'confirmation' => [
-                    'type' => 'redirect',
+                    'type'       => 'redirect',
                     'return_url' => $data['return_url'],
                 ],
-                'capture' => $data['capture'],
-                'metadata' => [
+                'capture'      => $data['capture'],
+                'metadata'     => [
                     'transactionId' => $data['transactionId'],
                 ],
             ];
