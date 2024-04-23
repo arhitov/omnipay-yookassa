@@ -1,0 +1,55 @@
+{
+  "type": "notification",
+  "event": "payment.succeeded",
+  "object": {
+    "id": "2db9930f-000f-5000-9000-18ab22edea46",
+    "status": "succeeded",
+    "amount": {
+      "value": "123.00",
+      "currency": "RUB"
+    },
+    "income_amount": {
+      "value": "118.69",
+      "currency": "RUB"
+    },
+    "description": "Test payment",
+    "recipient": {
+      "account_id": "371134",
+      "gateway_id": "2227041"
+    },
+    "payment_method": {
+      "type": "bank_card",
+      "id": "2db9930f-000f-5000-9000-18ab22edea46",
+      "saved": false,
+      "title": "Bank card *2987",
+      "card": {
+        "first6": "220247",
+        "last4": "2987",
+        "expiry_year": "2024",
+        "expiry_month": "11",
+        "card_type": "Mir"
+      }
+    },
+    "captured_at": "2024-04-23T09:28:58.427Z",
+    "created_at": "2024-04-23T09:28:47.242Z",
+    "test": true,
+    "refunded_amount": {
+      "value": "0.00",
+      "currency": "RUB"
+    },
+    "paid": true,
+    "refundable": true,
+    "metadata": {
+      "transactionId": "9be004a2-0163-43b5-80b7-6173cc5e8743"
+    },
+    "authorization_details": {
+      "rrn": "903375765931827",
+      "auth_code": "497297",
+      "three_d_secure": {
+        "applied": false,
+        "method_completed": false,
+        "challenge_completed": false
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
     "name": "arhitov/omnipay-yookassa",
-    "version": "5.1.0",
+    "version": "5.1.1",
     "type": "library",
     "description": "YooKassa driver for Omnipay payment processing library",
     "keywords": [
