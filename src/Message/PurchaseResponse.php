@@ -1,4 +1,5 @@
 <?php
+
 /**
  * YooKassa driver for Omnipay payment processing library
  *
@@ -46,7 +47,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function isSuccessful()
     {
-        return false;
+        return  $this->getState() === 'succeeded';
     }
 
     public function isPending(): bool
@@ -76,7 +77,7 @@ class PurchaseResponse extends AbstractResponse implements RedirectResponseInter
 
     public function isRedirect()
     {
-        return true;
+        return !$this->isSuccessful();
     }
 
     public function getRedirectMethod()
